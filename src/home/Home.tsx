@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 
 import { useAppSelector, useAppDispatch } from '../../app/hooks'
 
-import { getSessions } from './homeSlice'
+// import { getSessions } from './homeSlice'
 import ChartNavigation from '../common/ChartNavigation';
 import CardSmall from '../common/CardSmall';
 import SmallBarChart from '../components/SmallBarChart';
@@ -11,20 +11,11 @@ import SmallLineChart from '../components/SmallLineChart';
 import SmallBubbleChart from '../components/SmallBubbleChart';
 import SmallPieChart from '../components/SmallPieChart';
 import BigLineChart from '../components/BigLineChart';
-import { LineChartWithNavigation } from '../common/LineChartWithNavigation';
+import { ChartWithNavigation } from '../common/ChartWithNavigation';
 import LongCard from '../common/LongCard';
 import SchedulerForm from '../components/SchedulerForm';
 
 const Home: React.FC = () => {
-
-  const sessions = useAppSelector((state) => state.home.sessions)
-  const activeTab = useAppSelector((state) => state.home.activeNavTab)
-  const dispatch = useAppDispatch()
-
-
-  useEffect(() => {
-    dispatch(getSessions())
-  }, [])
 
   // console.log(sessions);
 
@@ -55,7 +46,7 @@ const Home: React.FC = () => {
         </div>
       </div>
       {/* Build a card in bootstarp */}
-      <LineChartWithNavigation />
+      <ChartWithNavigation />
       {/* Make Cards in one row with two equal columns */}
       <div className='row mt-3'>
         <div className='col'>

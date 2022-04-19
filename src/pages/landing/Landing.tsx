@@ -1,8 +1,10 @@
-import React from 'react'
-
+import React, { useEffect, useState } from 'react'
+import Form from 'react-bootstrap/Form'
 
 import { StaticKeyWords as sk } from '../../constants/config'
-import Home from '../../home/Home'
+import { useAppSelector, useAppDispatch } from '../../../app/hooks'
+
+import { getSessions } from './landingSlice'
 import SideNavigation from '../../navigation/SideNavigation'
 import ProjectInfoCard from '../../common/ProjectInfoCard'
 
@@ -10,11 +12,42 @@ import ProjectInfoCard from '../../common/ProjectInfoCard'
 
 const Landing: React.FC = (props) => {
 
-  const [loading, setLoading] = React.useState(false)
+  const _sessions = useAppSelector((state) => state.landing.sessions)
+  const loading = useAppSelector((state) => state.landing.loading)
+  // const activeTab = useAppSelector((state) => state.landing.activeNavTab)su
+  const [selectedSubject, setSelectedSubject] = useState('')
+  const [relativeDates, seRelativeDates] = useState([])
 
-  const handleSubmit = () => {
-    setLoading(!loading)
+  const dispatch = useAppDispatch()
+
+  const subOptions: string[] = []
+
+
+  useEffect(() => {
+    dispatch(getSessions())
+
+  }, [])
+
+  _sessions.forEach((session) => {
+    subOptions.push(`${session.keyword}`)
+  })
+
+  const uniqueSubjects = [...new Set(subOptions)]
+
+  const findDatesBasedOnSubjects = (subject: string) => {
+    const data = _sessions.filter((session) => session.keyword === subject)
+    return data
   }
+
+  const handleChange = (event: any) => {
+    setSelectedSubject(event.target.value)
+    const data: any = findDatesBasedOnSubjects(event.target.value)
+    seRelativeDates(data)
+  }
+
+
+  // console.log(relativeDates);
+
   return (
     <div className='row mt-5'>
       <div>
@@ -26,39 +59,50 @@ const Landing: React.FC = (props) => {
                 <div className="card-body d-flex p-0">
                   <ProjectInfoCard
                     title={sk?.title}
-                    description={sk?.schedular?.desc}
-                    question={sk?.auth?.signup?.loginDesc}
-                    link={sk?.auth?.signup?.loginButton}
+                    description={sk?.session?.desc}
                   />
                   <div className='m-4 py-3' style={{ width: 400 }}>
-                    <h3>{sk?.schedular?.title}</h3>
-                    <form>
-                      <div className="form-group mb-5 mt-3">
-                        <label htmlFor="exampleInputEmail1">{sk?.schedular?.subject}</label>
-                        <select className="form-select" aria-label="Default select example">
-                          <option selected>Open this select menu</option>
-                          <option value="1">One</option>
-                          <option value="2">Two</option>
-                          <option value="3">Three</option>
-                        </select>
-                        <small id="emailHelp" className="form-text text-muted">{sk?.schedular.subjectDesc}</small>
-                      </div>
-                      <div className="form-group mt-4 mb-3">
-                        <label htmlFor="exampleInputPassword1">{sk?.schedular?.date}</label>
-                        <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password" />
-                      </div>
+                    <h3>{sk?.session?.title}</h3>
+                    <Form>
+                      <>
+                        <Form.Group className="mb-3">
+                          <Form.Label>{sk?.session?.subject}</Form.Label>
+                          <Form.Select className='mb-5' onChange={handleChange}>
+                            {
+                              uniqueSubjects &&
+                              uniqueSubjects.map((value) => {
+                                return (
+                                  <option key={value} value={value}>{value}</option>
+                                )
+                              }
+                              )
+                            }
+                          </Form.Select>
+                          <Form.Label>{sk?.session?.date}</Form.Label>
+                          <Form.Select className='mb-3'>
 
-                    </form>
+                            {relativeDates &&
+                              relativeDates.map((value: any, index: number) => {
+                                return (
+                                  <option key={index} value={value?.id}>{value?.name}</option>
+                                )
+                              })
+                            }
+                          </Form.Select>
+                        </Form.Group>
+                      </>
+                    </Form>
+
                     <button
                       type="submit"
                       className="btn btn-primary btn-block mt-2"
                       style={{ width: '100%' }}
-                      onClick={handleSubmit}
+
                     >
 
                       <div className='d-flex justify-content-center align-items-center'>
-                        <p className='m-2'> {sk?.auth?.signup?.button}</p>
-                        {loading && <p>Loading...</p>}
+                        <p className='m-2'> {sk?.session?.button}</p>
+                        {/* {loading && <p>Loading...</p>} */}
                       </div>
                     </button>
                   </div>

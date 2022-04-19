@@ -41,13 +41,14 @@ function App() {
               <div className='col-lg-2 col-md-4'>
               <SideNavigation />
             </div>
-            <div className='col-lg-10 col-md-8 d-flex justify-content-center'>
-              {/* <HomeNavigation /> */}
-              <Landing />
+            <div className='col-lg-10 col-md-8 d-flex justify-content-center text-center'>
+              <HomeNavigation />
+              {/* <Landing /> */}
             </div>
             </div>
             : 
               <Routes>
+                <Route path="/" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path='/login' element={<Login />} />
               </Routes>

@@ -11,8 +11,8 @@ const HomeNavigation: React.FC = () => {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/dashboard" element={<Home />} />
+        <Route path="/select-session" element={<Landing />} />
+        <Route path="/dashboard/:id" element={<Home />} />
         <Route path="class" element={<ClassAnalysis />} />
         <Route path="teacher" element={<TeacherAnalysis />} />
         <Route path="student" element={<StudentAnalysis />} />

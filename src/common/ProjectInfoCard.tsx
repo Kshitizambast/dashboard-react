@@ -3,8 +3,8 @@ import React from 'react'
 interface Props {
     title: string
     description: string
-    question: string
-    link: string
+    question?: string
+    link?: string
 }
 
 const ProjectInfoCard: React.FC<Props> = (props) => {

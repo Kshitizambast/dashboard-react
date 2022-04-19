@@ -32,14 +32,16 @@ const SideNavigation: React.FC = () => {
               {
                   BUTTONS.map((button, index) => {
                       return (
-                        <li className="nav-item" key={index.toString()} onClick={() => handleTabs(index)}>
+                        <li className="nav-item"  key={index.toString()} onClick={() => handleTabs(index)}>
                             <Link to={button?.path} className="nav-link">
                             <a className={"nav-link " + (active === index && "active")} aria-current="page" href="#">
-                            <span className='mx-1 px-1' >
+                            <p className=''> 
+                            <span className='mx-1' >
                              <i className={button?.icon}></i>
                               
                             </span>
-                            {button?.title}
+                              {button?.title} 
+                            </p>
                             </a>
                             </Link>
                         </li>

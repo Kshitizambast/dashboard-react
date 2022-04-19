@@ -7,13 +7,14 @@ export const StaticKeyWords = {
     "privacy": "privacy",
     "conditions": "conditions",
     "appDesc": "With the power of FirstSense, you can now focus only on functionaries for your digital products, while leaving the UI design on us!",
-    "schedular": {
-        "title": "Schedular",
-        "desc": "Schedular is a tool that helps you to manage your tasks and projects. It is a great way to organize your work and keep track of your time.",
-        "subject": "Subject",
-        "subjectDesc": "Subject description",
+    "session": {
+        "title": "Select Session",
+        "desc": "session is a tool that helps you to manage your tasks and projects. It is a great way to organize your work and keep track of your time.",
+        "subject": "Classroom",
+        "subjectDesc": "Classroom description",
         "date": "Date",
-    },
+        "button": "Analyze Session",
+    },  
     "sidebar": {
         "title": "Sidebar",
         "dashboard": {
@@ -22,22 +23,22 @@ export const StaticKeyWords = {
             "icon": "bi bi-house"
         },
         "student": {
-            "title": "Student Analytics",
+            "title": "Student ",
             "path": "/student",
             "icon": "bi bi-people"
         },
         "teacher": {
-            "title": "Teacher Analytics",
+            "title": "Teacher ",
             "path": "/teacher",
             "icon": "bi bi-person"
         },
         "course": {
-            "title": "Course Analytics",
+            "title": "Course ",
             "path": "/course",
             "icon": "bi bi-book"
         },
         "class": {
-            "title": "Class Analytics",
+            "title": "Class ",
             "path": "/class",
             "icon": "bi bi-x-diamond" 
         },

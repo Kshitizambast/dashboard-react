@@ -12,7 +12,6 @@ const Signup: React.FC = () => {
     return (
         <div>
             <div className='row d-flex'>
-
                 <div className='col py-5'>
                     <div className='d-flex justify-content-center align-items-center my-5'>
                         {/* Create a form in a cards in middle of the screen using bootstarp 5 */}

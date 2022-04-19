@@ -77,7 +77,7 @@ import {
         {
           label: 'Dataset 1',
           data: labels.map(() => faker.datatype.number({ min: 0, max: 100 })),
-          fill: false,
+          fill: true,
           borderColor: 'rgb(113,202,124)',
           backgroundColor: 'rgb(113,202,124,0.5)',
           lineTension: 0.5,
@@ -86,7 +86,7 @@ import {
           label: 'Dataset 2',
           data: labels.map(() => faker.datatype.number({ min: 0, max: 100 })),
           borderColor: 'rgb(53, 162, 235)',
-          fill: false,
+          fill: true,
           backgroundColor: 'rgba(53, 162, 235, 0.3)',
           lineTension: 0.5,
         },

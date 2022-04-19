@@ -50,7 +50,7 @@ const Signup: React.FC = () => {
 
                                         <div className='d-flex justify-content-center align-items-center'>
                                             <p className='m-2'> {sk?.auth?.signup?.button}</p>
-                                       {   loading &&  <p>Loading...</p>}
+                                            {loading && <p>Loading...</p>}
                                         </div>
                                     </button>
                                 </div>

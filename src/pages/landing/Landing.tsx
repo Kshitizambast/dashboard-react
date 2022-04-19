@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form'
 import { StaticKeyWords as sk } from '../../constants/config'
 import { useAppSelector, useAppDispatch } from '../../../app/hooks'
 
-import { getSessions } from './landingSlice'
+import { getSessions, setSessionId } from './landingSlice'
 import SideNavigation from '../../navigation/SideNavigation'
 import ProjectInfoCard from '../../common/ProjectInfoCard'
 
@@ -79,7 +79,7 @@ const Landing: React.FC = (props) => {
                             }
                           </Form.Select>
                           <Form.Label>{sk?.session?.date}</Form.Label>
-                          <Form.Select className='mb-3'>
+                          <Form.Select className='mb-3' onChange={(event) => dispatch(setSessionId(event.target.value))}>
 
                             {relativeDates &&
                               relativeDates.map((value: any, index: number) => {

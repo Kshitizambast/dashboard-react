@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 
 
 import { useAppSelector, useAppDispatch } from '../../app/hooks'
+import { useParams } from 'react-router-dom';
 
 // import { getSessions } from './homeSlice'
 import ChartNavigation from '../common/ChartNavigation';
@@ -14,11 +15,29 @@ import BigLineChart from '../components/BigLineChart';
 import { ChartWithNavigation } from '../common/ChartWithNavigation';
 import LongCard from '../common/LongCard';
 import SchedulerForm from '../components/SchedulerForm';
+import { getSitAndStandData, setSessionId } from './homeSlice';
 
 const Home: React.FC = () => {
 
-  // console.log(sessions);
 
+  const sitAndStandData = useAppSelector((state) => state.home.sitAndStandData)
+  const { id } = useParams();
+  
+
+  const dispatch = useAppDispatch()
+
+  const _id: number = parseInt(id);
+
+  
+
+  useEffect(() => {
+    dispatch(getSitAndStandData(id))
+    
+    dispatch(setSessionId(_id))
+  }, [])
+
+  // console.log(sitAndStandData);
+  
   return (
     <div>
       <div className='row pr-5 m pt-3' >
@@ -45,9 +64,7 @@ const Home: React.FC = () => {
           </CardSmall>
         </div>
       </div>
-      {/* Build a card in bootstarp */}
       <ChartWithNavigation />
-      {/* Make Cards in one row with two equal columns */}
       <div className='row mt-3'>
         <div className='col'>
           <LongCard title='Sessions'>

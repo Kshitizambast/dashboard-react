@@ -55,7 +55,7 @@ export const StaticKeyWords = {
             "changes": "1.2%",
         },
         "tab2": {
-            "title": "Hand Rise",
+            "title": "Movement ",
             "currentNumber": "3.9K",
             "changes": "1.2%",
         },

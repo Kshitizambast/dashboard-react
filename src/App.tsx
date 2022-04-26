@@ -14,6 +14,8 @@ import HomeNavigation from './navigation/HomeNavigation'
 import SideNavigation from './navigation/SideNavigation'
 import Signup from './pages/auth/Signup'
 import Login from './pages/auth/Login'
+import { useAuth } from './hooks/useAuth'
+import { AuthProvider } from './contexts/AuthContext'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -30,31 +32,39 @@ function App() {
 
   // }, [])
 
+  const user = localStorage.getItem('user')
+
   return (
-    <div>
+
+
+    <div className='row m-0 p-0'>
+      <AuthProvider>
       <TopNavigation />
       <div className="row">
         <main>
-            {
-              loggedIn ?
-              <div className='row'>
-              <div className='col-lg-2 col-md-4'>
-              <SideNavigation />
+          <div className='row'>
+            <div className='col-lg-2 col-md-4 p-0'>
+              {
+                  user &&
+                  <SideNavigation />
+              }
+            
             </div>
             <div className='col-lg-10 col-md-8 d-flex justify-content-center text-center'>
               <HomeNavigation />
               {/* <Landing /> */}
             </div>
-            </div>
-            : 
-              <Routes>
+          </div>
+
+          {/* <Routes>
                 <Route path="/" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path='/login' element={<Login />} />
-              </Routes>
-            }
+              </Routes> */}
+
         </main>
       </div>
+      </AuthProvider>
     </div>
   )
 }

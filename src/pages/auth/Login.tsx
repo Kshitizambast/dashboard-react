@@ -1,14 +1,26 @@
 import React from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 
 import ProjectInfoCard from '../../common/ProjectInfoCard'
 import { StaticKeyWords as sk } from '../../constants/config'
+import { useAuth } from '../../hooks/useAuth'
+// useLocation
 
 const Login: React.FC = () => {
     const [loading, setLoading] = React.useState(false)
+    const auth = useAuth()
+    const navigate  = useNavigate()
+    const location = useLocation()
 
-    const handleSubmit = () => {
-        setLoading(!loading)
+    const user = { name: 'user1', token: 'token' }
+
+    let from = location.state?.from.pathname || '/select-session'
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+        auth.signIn(user)
+        
+        navigate(from, { replace: true })
     }
     return (
         <div>
@@ -48,7 +60,7 @@ const Login: React.FC = () => {
                                         type="submit"
                                         className="btn btn-primary btn-block mt-2"
                                         style={{ width: '100%' }}
-                                        onClick={handleSubmit}
+                                        onClick={(event) => handleSubmit(event)}
                                     >
 
                                         <div className='d-flex justify-content-center align-items-center'>

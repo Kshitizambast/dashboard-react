@@ -8,13 +8,19 @@ interface HomeState {
     loading: boolean;
     error: string | null;
     activeNavTab: number;
+    sessionId: number;
+    sitAndStandData: Array<any>;
+    instructorMovementData: Array<any>;
 }
 
 
 const initialState = {
     loading: false,
     error: null,
-    activeNavTab: 0
+    activeNavTab: 0,
+    sessionId: 0,
+    sitAndStandData: [],
+    instructorMovementData: []
 
 } as HomeState;
 
@@ -27,12 +33,67 @@ export const homeSlice = createSlice({
         },
         setActiveNavTab: (state, action: PayloadAction<number>) => {
             state.activeNavTab = action.payload;
-        }
+        },
+
+        setSitAndStandData: (state, action: PayloadAction<any>) => {
+            state.sitAndStandData = action.payload;
+        },
+        setInstructorMovementData: (state, action: PayloadAction<any>) => {
+            state.instructorMovementData = action.payload;
+        },
+        setSessionId: (state, action: PayloadAction<number>) => {
+            state.sessionId = action.payload;
+        },
+        setError: (state, action: PayloadAction<string | null>) => {
+            state.error = action.payload;
+        },
+
+        reset(state) {
+            state = initialState;
+        },
     }
 });
 
-export const { setLoading, setActiveNavTab } = homeSlice.actions;
+export const { setLoading, setActiveNavTab, setSitAndStandData, setInstructorMovementData, setSessionId, setError, reset } = homeSlice.actions;
 
+
+export const getSitAndStandData = (sessionId: any) => (dispatch: AppDispatch) => {
+    dispatch(setLoading(true));
+    axios.get<any, any>(`${BASE_URL}/student/sitvsstand/${sessionId}`)
+        .then(res => {
+            if (res.data.statusCode === 200) {
+                dispatch(setLoading(false));
+                dispatch(setSitAndStandData(res.data.data));
+                
+            }
+            else {
+                const errMsg: string = 'Something went wrong. Please try again later.';
+            }
+
+        })
+        .catch(err => {
+            dispatch(setLoading(false));
+            dispatch(setError(err.message));
+        });
+}
+
+export const getInstructorMovementData = (sessionId: any) => (dispatch: AppDispatch) => {
+    dispatch(setLoading(true));
+    axios.get<any, any>(`${BASE_URL}/instructor/movement/${sessionId}`)
+        .then(res => {
+            if (res.data.statusCode === 200) {
+                dispatch(setLoading(false));
+                dispatch(setInstructorMovementData(res.data.data));
+            }
+            else {
+                const errMsg: string = 'Something went wrong. Please try again later.';
+            }
+        })
+        .catch(err => {
+            dispatch(setLoading(false));
+            dispatch(setError(err.message));
+        });
+}
 
 
 export const selectHome = (state: RootState) => state.home;

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Form from 'react-bootstrap/Form'
+import moment from 'moment'
 
 import { StaticKeyWords as sk } from '../../constants/config'
 import { useAppSelector, useAppDispatch } from '../../../app/hooks'
@@ -7,7 +8,8 @@ import { useAppSelector, useAppDispatch } from '../../../app/hooks'
 import { getSessions, setSessionId } from './landingSlice'
 import SideNavigation from '../../navigation/SideNavigation'
 import ProjectInfoCard from '../../common/ProjectInfoCard'
-
+import { Link, useNavigate } from 'react-router-dom'
+import { dateTime } from '../../utils/formatTime'
 
 
 const Landing: React.FC = (props) => {
@@ -18,7 +20,11 @@ const Landing: React.FC = (props) => {
   const [selectedSubject, setSelectedSubject] = useState('')
   const [relativeDates, seRelativeDates] = useState([])
 
+  let navigate = useNavigate()
+ 
   const dispatch = useAppDispatch()
+
+  const sessionId = useAppSelector((state) => state.landing.sessionId)
 
   const subOptions: string[] = []
 
@@ -44,12 +50,16 @@ const Landing: React.FC = (props) => {
     const data: any = findDatesBasedOnSubjects(event.target.value)
     seRelativeDates(data)
   }
+ 
+  const handleClick = () => {
+   navigate(`/dashboard/${sessionId}`)
+  }
 
 
-  // console.log(relativeDates);
+  console.log(sessionId);
 
   return (
-    <div className='row mt-5'>
+    <div className='row'>
       <div>
         <div className='row d-flex'>
           <div className='col py-5'>
@@ -84,7 +94,10 @@ const Landing: React.FC = (props) => {
                             {relativeDates &&
                               relativeDates.map((value: any, index: number) => {
                                 return (
-                                  <option key={index} value={value?.id}>{value?.name}</option>
+                                  <option key={index} value={value?.id}>{
+                                    dateTime(value?.createdAt)
+                                
+                                    }</option>
                                 )
                               })
                             }
@@ -92,19 +105,18 @@ const Landing: React.FC = (props) => {
                         </Form.Group>
                       </>
                     </Form>
+                      <button
+                       onClick={handleClick}
+                        type="submit"
+                        className="btn btn-primary btn-block mt-2"
+                        style={{ width: '100%' }}
 
-                    <button
-                      type="submit"
-                      className="btn btn-primary btn-block mt-2"
-                      style={{ width: '100%' }}
-
-                    >
-
-                      <div className='d-flex justify-content-center align-items-center'>
-                        <p className='m-2'> {sk?.session?.button}</p>
-                        {/* {loading && <p>Loading...</p>} */}
-                      </div>
-                    </button>
+                      >
+                        <div className='d-flex justify-content-center align-items-center'>
+                          <p className='m-2'> {sk?.session?.button}</p>
+                          {/* {loading && <p>Loading...</p>} */}
+                        </div>
+                      </button>
                   </div>
                 </div>
               </div>

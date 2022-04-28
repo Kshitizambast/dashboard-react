@@ -17,13 +17,13 @@ const TopNavigation: React.FC = () => {
     }
     const login = true
     return (
-        <header className="navbar navbar-light sticky-top bg-light flex-md-nowrap shadow">
+        <header className="navbar navbar-light sticky-top bg-falcon flex-md-nowrap" style={{width: window.innerWidth-250, marginLeft: 200}}>
             <Link to={'/dashboard'}>
                 <h5 className='mx-3'>{sk?.title}</h5>
             </Link>
             <ul className="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
                 <Link to={'/select-session'}>
-                    <button type="button" className="btn btn-outline-success me-2 ">Select Session</button>
+                    <button type="button" className="btn btn-outline-success me-2 ">Select Classroom</button>
                 </Link>
 
             </ul>

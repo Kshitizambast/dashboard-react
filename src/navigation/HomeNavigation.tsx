@@ -9,6 +9,7 @@ import StudentAnalysis from '../pages/student/StudentAnalysis'
 import Landing from '../pages/landing/Landing'
 import Login from '../pages/auth/Login'
 import Signup from '../pages/auth/Signup'
+import CompareTools from '../pages/compare/CompareTools'
 import { AuthProvider } from '../contexts/AuthContext'
 
 const HomeNavigation: React.FC = () => {
@@ -36,6 +37,14 @@ const HomeNavigation: React.FC = () => {
             </RequireAuth>
           }
         />
+         <Route
+          path="compare"
+          element={
+            <RequireAuth>
+              <CompareTools />
+            </RequireAuth>
+          } />
+        
         <Route
           path="class"
           element={

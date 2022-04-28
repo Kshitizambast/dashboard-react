@@ -9,6 +9,7 @@ import { StaticKeyWords } from '../constants/config'
 
 const BUTTONS = [
     StaticKeyWords?.sidebar?.dashboard,
+    StaticKeyWords?.sidebar?.compare,
     StaticKeyWords?.sidebar?.class,
     StaticKeyWords?.sidebar?.teacher,
     StaticKeyWords?.sidebar?.student,
@@ -26,7 +27,7 @@ const SideNavigation: React.FC = () => {
     }
     return (
         <div>
-        <nav id="sidebarMenu" className="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+        <nav id="sidebarMenu" className="col-md-3 col-lg-2 d-md-block sidebar collapse" style={{background: 'transparent'}}>
         <div className="position-sticky pt-3">
           <ul className="nav flex-column">
               {

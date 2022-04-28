@@ -11,7 +11,7 @@ import SmallBarChart from '../components/SmallBarChart';
 import SmallLineChart from '../components/SmallLineChart';
 import SmallBubbleChart from '../components/SmallBubbleChart';
 import SmallPieChart from '../components/SmallPieChart';
-import BigLineChart from '../components/BigLineChart';
+import BigLineChart from '../components/BigLineChartForSitAndStand';
 import { ChartWithNavigation } from '../common/ChartWithNavigation';
 import LongCard from '../common/LongCard';
 import SchedulerForm from '../components/SchedulerForm';

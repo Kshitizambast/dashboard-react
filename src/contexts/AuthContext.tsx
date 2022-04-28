@@ -26,6 +26,7 @@ export const AuthProvider = ({ children }: {children: React.ReactNode}) => {
     const signOut = () => {
         setUser(null);
         localStorage.removeItem('user');
+        
     };
 
     const registeredUser = localStorage.getItem('user');

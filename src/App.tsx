@@ -24,20 +24,12 @@ function App() {
 
   const navigate = useNavigate()
 
-  // useEffect(() => {
-  //   if(!loggedIn) {
-  //     navigate('/signup')
-  //     console.log(navigate)
-  //   }
-
-  // }, [])
-
   const user = localStorage.getItem('user')
 
   return (
 
 
-    <div className='row m-0 p-0'>
+    <div className='row m-0 p-0 bg-falcon'>
       <AuthProvider>
       <TopNavigation />
       <div className="row">
@@ -50,7 +42,7 @@ function App() {
               }
             
             </div>
-            <div className='col-lg-10 col-md-8 d-flex justify-content-center text-center'>
+            <div className='col-lg-10 col-md-8 text-center '>
               <HomeNavigation />
               {/* <Landing /> */}
             </div>

@@ -42,6 +42,11 @@ export const StaticKeyWords = {
             "path": "/class",
             "icon": "bi bi-x-diamond" 
         },
+         "compare": {
+            "title": "Compare ",
+            "path": "/compare",
+            "icon": "bi bi-x-diamond" 
+        },
         "meta": {
             "title": "Meta Analytics",
             "path": "/meta",

@@ -11,6 +11,7 @@ interface HomeState {
     sessionId: number;
     sitAndStandData: Array<any>;
     instructorMovementData: Array<any>;
+    audioStats: Array<any>;
 }
 
 
@@ -20,7 +21,8 @@ const initialState = {
     activeNavTab: 0,
     sessionId: 0,
     sitAndStandData: [],
-    instructorMovementData: []
+    instructorMovementData: [],
+    audioStats: []
 
 } as HomeState;
 
@@ -44,6 +46,9 @@ export const homeSlice = createSlice({
         setSessionId: (state, action: PayloadAction<number>) => {
             state.sessionId = action.payload;
         },
+        setAudioStats: (state, action: PayloadAction<any>) => {
+            state.audioStats = action.payload;
+        },
         setError: (state, action: PayloadAction<string | null>) => {
             state.error = action.payload;
         },
@@ -54,7 +59,7 @@ export const homeSlice = createSlice({
     }
 });
 
-export const { setLoading, setActiveNavTab, setSitAndStandData, setInstructorMovementData, setSessionId, setError, reset } = homeSlice.actions;
+export const { setLoading, setActiveNavTab, setSitAndStandData, setInstructorMovementData, setAudioStats, setSessionId, setError, reset } = homeSlice.actions;
 
 
 export const getSitAndStandData = (sessionId: any) => (dispatch: AppDispatch) => {
@@ -88,6 +93,24 @@ export const getInstructorMovementData = (sessionId: any) => (dispatch: AppDispa
             else {
                 const errMsg: string = 'Something went wrong. Please try again later.';
             }
+        })
+        .catch(err => {
+            dispatch(setLoading(false));
+            dispatch(setError(err.message));
+        });
+}
+
+export const getAudioStats = (sessionId: any) => (dispatch: AppDispatch) => {
+    dispatch(setLoading(true));
+    axios.get<any, any>(`${BASE_URL}/audiostats/${sessionId}`)
+        .then(res => {
+            if (res.data.statusCode === 200) {
+                dispatch(setLoading(false));
+                dispatch(setAudioStats(res.data.data.studentSpeechInfo));
+            }
+            else {
+                const errMsg: string = 'Something went wrong. Please try again later.';
+            }   
         })
         .catch(err => {
             dispatch(setLoading(false));

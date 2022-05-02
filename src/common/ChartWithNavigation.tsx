@@ -1,44 +1,45 @@
 import React, { useEffect } from 'react'
 
 import ChartNavigation from './ChartNavigation'
-import BigLineChart from '../components/BigLineChart'
+import BigLineChartForSitAndStand from '../components/BigLineChartForSitAndStand'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { getInstructorMovementData, setActiveNavTab, setInstructorMovementData } from '../home/homeSlice'
+import { getAudioStats, getInstructorMovementData, setActiveNavTab, setAudioStats, setInstructorMovementData } from '../home/homeSlice'
 import BigBarChart from '../components/BigBarChart'
 import BigBubbleChart from '../components/BigBubbleChart'
 import BigScatterChart from '../components/BigScatterChart'
+import StudentSpeechChart from '../components/StudentSpeechChart'
 
 
-function sitAndStandModification(sitAndStand: Array<any>){
-   let modifiedData = []
-   let frequency: any = {}
-   sitAndStand.forEach(element => {
-      if(frequency[element.timeDiff.seconds]){
-         frequency[element.timeDiff.seconds] += 1
-      }else{
-         frequency[element.timeDiff.seconds] = 1
-      }
-   })
-   let timeDiffs = []
-   for(let key in frequency){
-      let diff = 1 / frequency[key]
-      for(let i = 0; i < frequency[key]; i++){
-         timeDiffs.push(parseFloat(key) + diff * i)
-      }
-   }
-    
-   // add timeDiffs to sitAndStand
-    for(let i=0; i<timeDiffs.length; i++){
-      let timeDiff = timeDiffs[i]
-      var o = Object.assign({}, sitAndStand[i])
-      o.timeDiff = {seconds: timeDiff}
-      modifiedData.push(o)
+function sitAndStandModification(sitAndStand: Array<any>) {
+  let modifiedData = []
+  let frequency: any = {}
+  sitAndStand.forEach(element => {
+    if (frequency[element.timeDiff.seconds]) {
+      frequency[element.timeDiff.seconds] += 1
+    } else {
+      frequency[element.timeDiff.seconds] = 1
     }
-      
+  })
+  let timeDiffs = []
+  for (let key in frequency) {
+    let diff = 1 / frequency[key]
+    for (let i = 0; i < frequency[key]; i++) {
+      timeDiffs.push(parseFloat(key) + diff * i)
+    }
+  }
+
+  // add timeDiffs to sitAndStand
+  for (let i = 0; i < timeDiffs.length; i++) {
+    let timeDiff = timeDiffs[i]
+    var o = Object.assign({}, sitAndStand[i])
+    o.timeDiff = { seconds: timeDiff }
+    modifiedData.push(o)
+  }
 
 
-    return modifiedData
-   
+
+  return modifiedData
+
 }
 
 export const ChartWithNavigation = () => {
@@ -50,32 +51,35 @@ export const ChartWithNavigation = () => {
   const activeNavTab = useAppSelector(state => state.home.activeNavTab)
   const sitAndStandData = useAppSelector((state) => state.home.sitAndStandData)
   const instructorMovementData = useAppSelector((state) => state.home.instructorMovementData)
+  const audioStats = useAppSelector((state) => state.home.audioStats)
   const sessionId = useAppSelector((state) => state.home.sessionId)
 
-  console.log('sitAndStand', sitAndStandData);
+  const dispatch = useAppDispatch()
+
   const modifiedSitAndStand = sitAndStandModification(sitAndStandData)
-  console.log('modifiedSitAndStand', modifiedSitAndStand);
+
 
 
   useEffect(() => {
     //dispatch(setActiveNavTab('sit'))
     dispatch(getInstructorMovementData('61921e8f94d0b4233d7ca210'))
+    dispatch(getAudioStats('617ec63394d0b43170816833'))
 
     return () => {
       dispatch(setInstructorMovementData([]))
+      dispatch(setAudioStats([]))
     }
 
   }, [activeNavTab])
 
 
 
-  console.log('timeDiffs', timeDiffs);
-  console.log('sit',sitData);
-  console.log('stand', standData);
-  
+    ;
+  console.log('audioData', audioStats);
+
   // const timeDeffs = 
-  
-  const dispatch = useAppDispatch()
+
+
 
   return (
     <div>
@@ -91,10 +95,14 @@ export const ChartWithNavigation = () => {
           </div>
           {
             activeNavTab === 0 ?
-                <BigLineChart sitAndStandData={modifiedSitAndStand}  />
+              <BigLineChartForSitAndStand
+                sitAndStandData={modifiedSitAndStand}
+              />
               : activeNavTab === 1 ?
-                  <BigScatterChart instructorMovementData={instructorMovementData} />
-                : <BigBubbleChart />
+                <BigScatterChart instructorMovementData={instructorMovementData} />
+                : <StudentSpeechChart
+                  studentSpeechData={audioStats}
+                />
           }
           {/* <BigLineChart /> */}
           <hr />
